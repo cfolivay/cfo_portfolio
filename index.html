@@ -383,8 +383,19 @@
     .copy-status { min-height: 1.4em; font-family: var(--font-mono); font-size: var(--fs-xs); }
     .copy-status.is-ok { color: var(--accent); }
     .copy-status.is-error { color: var(--signal); }
-    .links { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); padding-top: var(--s-2); font-size: var(--fs-sm); }
-    .links a { text-underline-offset: 4px; }
+    .btn-icon { width: 18px; height: 18px; flex: none; }
+    .btn--sm { min-height: 40px; padding: 0 var(--s-4); font-size: var(--fs-xs); flex: 1 1 0; }
+    .email-options {
+      display: grid; gap: var(--s-2);
+      padding: var(--s-4); border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--bg) 18%, transparent);
+      animation: drop .25s var(--ease);
+    }
+    .email-options[hidden] { display: none; }
+    .contact .email-options-label { margin: 0; font-size: var(--fs-xs); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .04em; }
+    .email-options-row { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+    @keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .email-options { animation: none; } }
 
     /* ============================================================
        10. FOOTER
@@ -722,16 +733,31 @@
         </div>
 
         <div class="contact-actions reveal">
-          <a class="btn btn--primary" href="mailto:cfolivay@gmail.com?subject=Project%20inquiry" data-email="cfolivay@gmail.com">
+          <!-- Email: one place to change the address -->
+          <a class="btn btn--primary" id="email-me" data-email="cfolivay@gmail.com"
+             href="mailto:cfolivay@gmail.com?subject=Project%20inquiry"
+             aria-expanded="false" aria-controls="email-options">
             Email me
           </a>
-          <button class="btn btn--ghost" type="button" id="copy-email">Copy email address</button>
-          <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
-          <div class="links">
-            <!-- TODO: replace with your real profile links, or delete a line you don't use -->
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
-            <a href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+
+          <!-- Shown when "Email me" is clicked: pick the email app you use -->
+          <div class="email-options" id="email-options" hidden>
+            <p class="email-options-label">Open a new message in:</p>
+            <div class="email-options-row">
+              <a class="btn btn--ghost btn--sm" id="email-gmail" target="_blank" rel="noopener">Gmail</a>
+              <a class="btn btn--ghost btn--sm" id="email-outlook" target="_blank" rel="noopener">Outlook</a>
+              <a class="btn btn--ghost btn--sm" id="email-default">Mail app</a>
+            </div>
           </div>
+
+          <button class="btn btn--ghost" type="button" id="copy-email">Copy email address</button>
+
+          <a class="btn btn--ghost" href="https://linkedin.com/in/cfolivay" target="_blank" rel="noopener">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3v-11zm6.5 0h3.8v1.5h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.76v5.69h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4v-11z"/></svg>
+            Connect on LinkedIn
+          </a>
+
+          <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -804,15 +830,53 @@
         clearTimeout(showStatus.t);
         showStatus.t = setTimeout(function () { status.textContent = ''; }, 4000);
       };
+      // Fallback for older browsers without the Clipboard API
+      var legacyCopy = function (text) {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+      };
       copyBtn.addEventListener('click', function () {
+        var done = function () { showStatus('Copied: ' + email, true); };
+        var fail = function () { showStatus("Couldn't copy. My email is " + email, false); };
         if (navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(email).then(
-            function () { showStatus('Copied: ' + email, true); },
-            function () { showStatus("Couldn't copy. My email is " + email, false); }
-          );
+          navigator.clipboard.writeText(email).then(done, function () {
+            legacyCopy(email) ? done() : fail();
+          });
         } else {
-          showStatus("Couldn't copy here. My email is " + email, false);
+          legacyCopy(email) ? done() : fail();
         }
+      });
+
+      // "Email me": open a pre-filled new message in the visitor's email app
+      var subject = 'Project inquiry';
+      var body = 'Hi Cha,\n\n' +
+                 'Store or website link (if any):\n' +
+                 'What I need help with:\n' +
+                 'Timeline:\n\n' +
+                 'Thanks,\n';
+      var enc = encodeURIComponent;
+      document.getElementById('email-gmail').href =
+        'https://mail.google.com/mail/?view=cm&fs=1&to=' + enc(email) + '&su=' + enc(subject) + '&body=' + enc(body);
+      document.getElementById('email-outlook').href =
+        'https://outlook.office.com/mail/deeplink/compose?to=' + enc(email) + '&subject=' + enc(subject) + '&body=' + enc(body);
+      document.getElementById('email-default').href =
+        'mailto:' + email + '?subject=' + enc(subject) + '&body=' + enc(body);
+
+      // Without JS, "Email me" stays a plain mailto link. With JS, it toggles the options.
+      var emailBtn = document.getElementById('email-me');
+      var emailOptions = document.getElementById('email-options');
+      emailBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var open = emailOptions.hidden;
+        emailOptions.hidden = !open;
+        emailBtn.setAttribute('aria-expanded', String(open));
+        if (open) document.getElementById('email-gmail').focus({ preventScroll: true });
       });
     })();
   </script>
