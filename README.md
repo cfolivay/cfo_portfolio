@@ -14,7 +14,6 @@ One file, `index.html`, with no build step and no dependencies other than Google
 
 ## Before sharing with clients
 
-- Replace `your-email@example.com` in `index.html` (2 places, in the Contact section).
 - Replace the LinkedIn and GitHub links with your real profiles, or delete them.
 - When a demo case study is ready, change its "Case study coming soon" button to a real link.
 
