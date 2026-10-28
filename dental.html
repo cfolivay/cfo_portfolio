@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dental Clinic Follow-up Automation — Cha Olivay</title>
+  <meta name="description" content="Demo build: a Google Form, Google Sheets and Make.com system that logs new patient inquiries and sends three timed follow-up emails automatically.">
+  <meta property="og:title" content="Dental Clinic Follow-up Automation — Cha Olivay">
+  <meta property="og:description" content="New patient inquiries get logged and followed up three times, with no manual steps.">
+  <meta property="og:type" content="article">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E1726'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%2316A374'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="site-header" id="top">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Cha Olivay, home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Cha Olivay
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#work">Work</a></li>
+          <li><a href="index.html#process">Process</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li class="nav-cta"><a class="btn btn--primary" href="index.html#contact">Start a project</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================== HERO ============================== -->
+    <section class="hero cs-hero" aria-labelledby="cs-title">
+      <div class="wrap">
+        <a class="crumb" href="index.html#work"><span aria-hidden="true">←</span> All work</a>
+      </div>
+      <div class="wrap hero-grid" style="margin-top: var(--s-6)">
+        <div class="hero-copy">
+          <div class="case-meta">
+            <span class="tag tag--open">Demo build</span>
+            <span class="tag tag--muted">Automation</span>
+          </div>
+          <h1 id="cs-title">Dental clinic follow-up, <em>on autopilot.</em></h1>
+          <p class="hero-lede">
+            A new patient fills in a form. Their details land in a spreadsheet, and three
+            follow-up emails go out on schedule. Nobody at the front desk has to remember.
+          </p>
+          <dl class="cs-meta">
+            <div>
+              <dt class="label">Built with</dt>
+              <dd>Google Forms, Google Sheets, Make.com, Gmail</dd>
+            </div>
+            <div>
+              <dt class="label">Type</dt>
+              <dd>Concept build, not client work</dd>
+            </div>
+            <div>
+              <dt class="label">My role</dt>
+              <dd>Planning, build and testing</dd>
+            </div>
+          </dl>
+        </div>
+
+        <article class="casefile reveal" aria-label="Case summary">
+          <div class="casefile-top">
+            <span class="label">Demo 01 · Clinic follow-up</span>
+            <span class="tag">Tested</span>
+          </div>
+          <dl>
+            <div class="row">
+              <dt class="label">Problem</dt>
+              <dd>Clinic inquiries go cold when nobody follows up in time</dd>
+            </div>
+            <div class="row">
+              <dt class="label">Fix</dt>
+              <dd>Form → Sheet → Make.com sends three timed emails</dd>
+            </div>
+            <div class="row">
+              <dt class="label">Manual steps</dt>
+              <dd>Zero, after setup</dd>
+            </div>
+            <div class="row">
+              <dt class="label">Status</dt>
+              <dd>Tested end to end. Every module ran and all three emails arrived.</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================== PROBLEM ============================== -->
+    <section aria-labelledby="problem-title">
+      <div class="wrap cs-block reveal">
+        <header class="cs-block-head">
+          <span class="label">01 · The problem</span>
+          <h2 id="problem-title">Follow-ups slip when the front desk is busy</h2>
+        </header>
+        <div class="cs-block-body">
+          <p>
+            Small clinics get inquiries from Facebook, their website and walk-ins.
+            The front desk is also checking in patients, answering calls and handling payments.
+            Follow-ups happen late, or not at all.
+          </p>
+          <p>
+            Every inquiry that doesn't get a reply is a patient who may book somewhere else.
+          </p>
+          <p>
+            <strong>The goal:</strong> log every inquiry in one place, and make sure every inquiry
+            gets a reply and two reminders without anyone doing it by hand.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== FLOW ============================== -->
+    <section class="work" aria-labelledby="flow-title">
+      <div class="wrap">
+        <header class="section-head reveal">
+          <span class="label">02 · How it works</span>
+          <h2 id="flow-title">Five steps, one trigger</h2>
+          <p>A form submission starts everything. The rest runs on its own.</p>
+        </header>
+
+        <ol class="flow reveal" aria-label="Automation flow">
+          <li class="flow-node">
+            <div class="flow-node-top"><span class="num">1</span><span class="when">trigger</span></div>
+            <div><h3>Patient fills in the form</h3><p>Name, email and phone on a Google Form.</p></div>
+          </li>
+          <li class="flow-link" aria-hidden="true">instant</li>
+          <li class="flow-node">
+            <div class="flow-node-top"><span class="num">2</span><span class="when">instant</span></div>
+            <div><h3>Row added to the sheet</h3><p>Google Sheets logs it with a timestamp. Make.com watches for new rows.</p></div>
+          </li>
+          <li class="flow-link" aria-hidden="true">instant</li>
+          <li class="flow-node">
+            <div class="flow-node-top"><span class="num">3</span><span class="when">instant</span></div>
+            <div><h3>Email 1: Thanks</h3><p>Confirms the inquiry was received.</p></div>
+          </li>
+          <li class="flow-link flow-link--wait" aria-hidden="true">wait</li>
+          <li class="flow-node">
+            <div class="flow-node-top"><span class="num">4</span><span class="when when--wait">after a wait</span></div>
+            <div><h3>Email 2: Check-in</h3><p>A short nudge if they haven't booked yet.</p></div>
+          </li>
+          <li class="flow-link flow-link--wait" aria-hidden="true">wait</li>
+          <li class="flow-node">
+            <div class="flow-node-top"><span class="num">5</span><span class="when when--wait">after a wait</span></div>
+            <div><h3>Email 3: Last message</h3><p>A final, polite follow-up, then the sequence ends.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================== BUILD ============================== -->
+    <section aria-labelledby="build-title">
+      <div class="wrap">
+        <header class="section-head reveal">
+          <span class="label">03 · The build</span>
+          <h2 id="build-title">What I built, piece by piece</h2>
+          <p>Screenshots are from the working demo. Click any image to open it full size.</p>
+        </header>
+
+        <ol class="build-steps">
+          <!-- Step A: Form -->
+          <li class="build-step reveal">
+            <div class="build-step-copy">
+              <span class="label">Step A</span>
+              <h3>The intake form</h3>
+              <p>
+                Three fields: email, name and phone. Email and name are required; phone is optional.
+                Short forms get more submissions, and three fields are enough to follow up.
+              </p>
+              <p>After submitting, the patient sees a clear confirmation message.</p>
+            </div>
+            <div class="shot-stack">
+              <figure class="shot">
+                <a class="shot-frame" href="assets/img/dental/form.webp" target="_blank" rel="noopener">
+                  <img src="assets/img/dental/form.webp" width="585" height="615" loading="lazy"
+                       alt="Google Form titled Demo Follow-up Form with Email, Name and Phone fields and a Submit button">
+                </a>
+                <figcaption>The form patients fill in.</figcaption>
+              </figure>
+              <figure class="shot">
+                <a class="shot-frame" href="assets/img/dental/form-done.webp" target="_blank" rel="noopener">
+                  <img src="assets/img/dental/form-done.webp" width="585" height="180" loading="lazy"
+                       alt="Form confirmation reading: Thanks! You'll receive demo follow-ups.">
+                </a>
+                <figcaption>Confirmation shown after submitting.</figcaption>
+              </figure>
+            </div>
+          </li>
+
+          <!-- Step B: Sheet -->
+          <li class="build-step reveal">
+            <div class="build-step-copy">
+              <span class="label">Step B</span>
+              <h3>A spreadsheet as a simple CRM</h3>
+              <p>
+                Every submission becomes a row with a timestamp. The clinic gets a running list
+                of inquiries in a tool they already know, without paying for a CRM.
+              </p>
+              <p class="note">The test row uses my own email and a dummy phone number.</p>
+            </div>
+            <figure class="shot">
+              <a class="shot-frame" href="assets/img/dental/sheet.webp" target="_blank" rel="noopener">
+                <img src="assets/img/dental/sheet.webp" width="785" height="362" loading="lazy"
+                     alt="Google Sheet named Automation Demos - CRM with columns Timestamp, Email address, Name, Email and Phone, holding one test row">
+              </a>
+              <figcaption>Form responses land in this sheet automatically.</figcaption>
+            </figure>
+          </li>
+
+          <!-- Step C: Make.com -->
+          <li class="build-step build-step--wide reveal">
+            <div class="build-step-copy">
+              <span class="label">Step C</span>
+              <h3>The Make.com scenario</h3>
+              <p>
+                Six modules in a row. Make.com watches the sheet for new rows, sends the first email,
+                waits, sends the second, waits again, then sends the third.
+                The green checks and “1” badges show each module ran once for the test row.
+              </p>
+            </div>
+            <figure class="shot">
+              <a class="shot-frame shot-scroll" href="assets/img/dental/scenario-run.webp" target="_blank" rel="noopener">
+                <img src="assets/img/dental/scenario-run.webp" width="1740" height="270" loading="lazy"
+                     alt="Make.com scenario: Google Sheets Watch New Rows, Gmail Send an email, Tools Sleep, Gmail Send an email, Tools Sleep, Gmail Send an email. All six modules show a green check.">
+              </a>
+              <figcaption>Sheets → Gmail → Sleep → Gmail → Sleep → Gmail. All six modules completed.<span class="swipe-hint"> Swipe sideways to see the full scenario.</span></figcaption>
+            </figure>
+          </li>
+
+          <!-- Step D: Emails -->
+          <li class="build-step build-step--wide reveal">
+            <div class="build-step-copy">
+              <span class="label">Step D</span>
+              <h3>The three emails</h3>
+              <p>All three arrived in the test inbox, in order.</p>
+            </div>
+            <div class="shot-row shot-row--3">
+              <figure class="shot">
+                <a class="shot-frame" href="assets/img/dental/email-1.webp" target="_blank" rel="noopener">
+                  <img src="assets/img/dental/email-1.webp" width="500" height="110" loading="lazy"
+                       alt="Inbox email with subject Demo Follow-Up #1: Thanks!">
+                </a>
+                <figcaption>#1: Thanks, sent right away.</figcaption>
+              </figure>
+              <figure class="shot">
+                <a class="shot-frame" href="assets/img/dental/email-2.webp" target="_blank" rel="noopener">
+                  <img src="assets/img/dental/email-2.webp" width="568" height="110" loading="lazy"
+                       alt="Inbox email with subject Demo Follow-up #2: Quick Check-In">
+                </a>
+                <figcaption>#2: Quick check-in.</figcaption>
+              </figure>
+              <figure class="shot">
+                <a class="shot-frame" href="assets/img/dental/email-3.webp" target="_blank" rel="noopener">
+                  <img src="assets/img/dental/email-3.webp" width="523" height="110" loading="lazy"
+                       alt="Inbox email with subject Demo Follow-Up #3: Last Message">
+                </a>
+                <figcaption>#3: Last message.</figcaption>
+              </figure>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================== TROUBLESHOOTING ============================== -->
+    <section class="work" aria-labelledby="fix-title">
+      <div class="wrap cs-block">
+        <header class="cs-block-head reveal">
+          <span class="label">04 · Testing</span>
+          <h2 id="fix-title">The first run failed. Here's how I fixed it.</h2>
+          <p style="color: var(--ink-soft)">
+            I handle problems the same way in my day job:
+            record the symptom, find the cause, fix it, then prove the fix works.
+          </p>
+        </header>
+
+        <div class="cs-block-body reveal">
+          <article class="incident" aria-label="Troubleshooting record">
+            <div class="incident-top">
+              <span class="label">Issue 01 · Gmail step</span>
+              <span class="tag">Resolved</span>
+            </div>
+            <dl>
+              <div class="row">
+                <dt class="label">Symptom</dt>
+                <dd>The scenario stopped at the first Gmail step with
+                  <code>[403] Request had insufficient authentication scopes</code></dd>
+              </div>
+              <div class="row">
+                <dt class="label">Root cause</dt>
+                <dd>The Gmail connection in Make.com didn't have permission to send email from the account.</dd>
+              </div>
+              <div class="row">
+                <dt class="label">Fix</dt>
+                <dd>Reconnected Gmail in Make.com and granted the send permission.</dd>
+              </div>
+              <div class="row">
+                <dt class="label">Verified</dt>
+                <dd>Ran the scenario again. It completed with no errors, and all three emails arrived.</dd>
+              </div>
+            </dl>
+          </article>
+
+          <figure class="shot">
+            <a class="shot-frame" href="assets/img/dental/runlog.webp" target="_blank" rel="noopener">
+              <img src="assets/img/dental/runlog.webp" width="860" height="180" loading="lazy"
+                   alt="Make.com run log: the failed 9:08 AM run is visible at the top, followed by a 9:11 AM run ending in: The scenario run was completed.">
+            </a>
+            <figcaption>Run log: the 9:08 failure at the top, then the clean 9:11 run.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== NEXT ============================== -->
+    <section aria-labelledby="next-title">
+      <div class="wrap cs-block reveal">
+        <header class="cs-block-head">
+          <span class="label">05 · For a real clinic</span>
+          <h2 id="next-title">What I'd change before going live</h2>
+        </header>
+        <div class="cs-block-body">
+          <p>The demo proves the flow works. A live version for a clinic needs four more things:</p>
+          <ul class="todo">
+            <li>
+              <div>
+                <strong>Real gaps between emails</strong>
+                <span>In the demo, the waits are a few minutes so the whole sequence can be tested quickly.
+                  A clinic would want one to three days, using a “next follow-up date” column and a daily run.</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Stop once the patient books</strong>
+                <span>Add a Status column. When the front desk marks a row as “Booked”, the remaining emails are skipped.</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>The clinic's own email and booking link</strong>
+                <span>Send from the clinic's address, with its name, and a link to book an appointment.</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Careful handling of patient data</strong>
+                <span>Collect only what's needed, and limit who can open the sheet.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CTA ============================== -->
+    <section class="contact" aria-labelledby="cta-title">
+      <div class="wrap contact-grid">
+        <div class="reveal">
+          <span class="label">Next step</span>
+          <h2 id="cta-title">Want this for your clinic or business?</h2>
+          <p>
+            The same setup works for any business that gets inquiries: salons, tutors,
+            real estate, repair services. Tell me how your inquiries come in.
+          </p>
+        </div>
+        <div class="contact-actions reveal">
+          <a class="btn btn--primary" href="index.html#contact">Get in touch</a>
+          <a class="btn btn--ghost" href="index.html#work">Back to all work</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© <span id="year">2026</span> Cha Olivay · Based in the Philippines</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

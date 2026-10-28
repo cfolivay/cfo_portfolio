@@ -2,7 +2,18 @@
 
 Freelance portfolio of Cha Olivay: Shopify, landing pages and practical automation.
 
-One file, `index.html`, with no build step and no dependencies other than Google Fonts.
+Plain HTML/CSS/JS with no build step and no dependencies other than Google Fonts.
+
+```
+index.html              Homepage
+dental.html             Case study: dental clinic follow-up automation (demo)
+assets/css/site.css     Shared styles (tokens at the top)
+assets/js/site.js       Shared behaviour: header, mobile menu, scroll reveal
+assets/img/<project>/   Screenshots per case study (.webp)
+```
+
+To add a case study, copy `dental.html`, swap the content and images, then link it from the
+matching demo card in `index.html`.
 
 ## Publish free on GitHub Pages
 
@@ -18,5 +29,5 @@ One file, `index.html`, with no build step and no dependencies other than Google
 
 ## Editing
 
-All colours, font sizes and spacing live in the `:root` block at the top of the `<style>` tag.
+All colours, font sizes and spacing live in the `:root` block at the top of `assets/css/site.css`.
 Change a token there and the whole page updates.
