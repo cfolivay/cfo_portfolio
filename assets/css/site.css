@@ -147,7 +147,7 @@ img { max-width: 100%; display: block; }
 @media (min-width: 900px) { :root { --section-y: 4.5rem; } }
 section { padding: var(--section-y) 0; }
 .section--flush-top { padding-top: 0; }
-.section-head { display: grid; gap: var(--s-3); margin-bottom: var(--s-6); }
+.section-head { display: grid; gap: var(--s-3); margin-bottom: var(--s-7); }
 .section-head p { color: var(--ink-soft); }
 
 /* Scroll reveal (only when JS is on and motion is allowed) */
@@ -230,7 +230,7 @@ section { padding: var(--section-y) 0; }
 /* ============================================================
    4. HERO
    ============================================================ */
-.hero { padding-top: var(--s-7); padding-bottom: var(--s-6); } /* 32px: hero flows straight into the next section */
+.hero { padding-top: var(--s-7); }
 .hero-grid { display: grid; gap: var(--s-7); align-items: center; }
 @media (min-width: 960px) {
   .hero { padding-top: var(--s-8); }
@@ -530,3 +530,29 @@ a.shot-frame:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -26px 
 .cs-divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .swipe-hint { color: var(--signal); }
 @media (min-width: 900px) { .swipe-hint { display: none; } }
+
+/* ============================================================
+   12. FULL-SCREEN HERO (homepage)
+   The hero fills the first screen like its own page; the scroll
+   cue glides down to the next section.
+   ============================================================ */
+section[id] { scroll-margin-top: 64px; } /* land below the sticky header */
+.hero--full {
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);
+  display: flex; flex-direction: column;
+  padding-bottom: var(--s-5);
+}
+.hero--full > .hero-grid { flex: 1; align-content: center; }
+.scroll-cue {
+  align-self: center;
+  display: inline-flex; flex-direction: column; align-items: center; gap: var(--s-1);
+  margin-top: var(--s-7);
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.scroll-cue:hover { color: var(--accent); }
+.scroll-cue svg { width: 20px; height: 20px; animation: cue 2.4s var(--ease) infinite; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .6; } 50% { transform: translateY(6px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
