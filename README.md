@@ -34,5 +34,5 @@ Change a token there and the whole page updates.
 
 ## After changing site.css or site.js
 
-Bump the `?v=` number on the `site.css` / `site.js` links in every page (for example `?v=4` → `?v=5`).
+Bump the `?v=` number on the `site.css` / `site.js` links in every page (for example `?v=5` → `?v=6`).
 Browsers cache these files for a few minutes, and the new number forces them to load the latest version.

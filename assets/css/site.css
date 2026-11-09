@@ -147,7 +147,7 @@ img { max-width: 100%; display: block; }
 @media (min-width: 900px) { :root { --section-y: 4.5rem; } }
 section { padding: var(--section-y) 0; }
 .section--flush-top { padding-top: 0; }
-.section-head { display: grid; gap: var(--s-3); margin-bottom: var(--s-7); }
+.section-head { display: grid; gap: var(--s-3); margin-bottom: var(--s-6); }
 .section-head p { color: var(--ink-soft); }
 
 /* Scroll reveal (only when JS is on and motion is allowed) */
@@ -230,7 +230,7 @@ section { padding: var(--section-y) 0; }
 /* ============================================================
    4. HERO
    ============================================================ */
-.hero { padding-top: var(--s-7); }
+.hero { padding-top: var(--s-7); padding-bottom: var(--s-6); } /* 32px: hero flows straight into the next section */
 .hero-grid { display: grid; gap: var(--s-7); align-items: center; }
 @media (min-width: 960px) {
   .hero { padding-top: var(--s-8); }
