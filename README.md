@@ -7,6 +7,7 @@ Plain HTML/CSS/JS with no build step and no dependencies other than Google Fonts
 ```
 index.html              Homepage
 dental.html             Case study: dental clinic follow-up automation (demo)
+project-smile.html      Case study: Project Smile dental website & brand kit (concept)
 assets/css/site.css     Shared styles (tokens at the top)
 assets/js/site.js       Shared behaviour: header, mobile menu, scroll reveal
 assets/img/<project>/   Screenshots per case study (.webp)
